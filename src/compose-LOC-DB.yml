@@ -1,0 +1,109 @@
+version: '3.7'
+
+services:
+  networks:
+    net-api:
+      driver: bridge 
+
+  # volumes:
+  #   postgresql_clean_loc:
+  #   postgresql_clean_loc_data:     
+  #   redis_loc_data: 
+  #   MongoDB_loc:
+
+  mssqlloc:
+    container_name: mssql-loc
+    hostname: mssqldb-loc
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: '123admin'
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: 'Developer' 
+      MSSQL_TCP_PORT: 1433 
+    networks:
+        - net-api    
+    ports: 
+      - "14330:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secrets      
+      
+  # pgsqlloc:
+  #     container_name: pgsql-loc
+  #     image: postgres:latest
+  #     networks:
+  #         - net-api
+  #     ports:
+  #         - 5433:5432
+  #     environment:
+  #         - POSTGRES_USER=root
+  #         - POSTGRES_PASSWORD=admin123
+  #     volumes:
+  #         - postgresql_clean_loc:/var/lib/postgresql
+  #         - postgresql_clean_loc_data:/var/lib/postgresql/data
+
+  # mysqlloc:
+  #   container_name: mysql-loc 
+  #   image: mysql:latest
+  #   networks:
+  #       - net-api    
+  #   ports:
+  #     - "33060:3306"
+  #   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  #   volumes:
+  #     - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
+  #   environment: 
+  #     MYSQL_ROOT_PASSWORD: admin123
+  
+  # apiloc:
+  #   container_name: api-loc
+  #   image: ${DOCKER_REGISTRY-}api
+  #   networks:
+  #       - net-api    
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=LOC
+  #   build:
+  #     context: .
+  #     args: 
+  #       AMBIENTE: LOC
+  #     dockerfile: API/Dockerfile
+  
+  #   ports:
+  #     - "7000:8080" #HOST_PORT:CONTAINER_PORT
+  #     - "7001:8081" #HOST_PORT:CONTAINER_PORT
+
+  # mongoloc:
+  #   container_name: mongo-loc
+  #   image: mongo
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: MongoDB
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - MongoDB_loc:/data/db
+  #   networks:
+  #     - net-api
+
+  # redisloc:
+  #   container_name: redis-loc
+  #   image: redis:latest
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_loc_data:/data
+  #   restart: unless-stopped
+
+  # oracleloc:
+  #   container_name: oracle-loc 
+  #   image: gvenzl/oracle-free
+  #   networks:
+  #     - net-api
+  #   ports:
+  #     - "15210:1521"
+  #   environment: 
+  #     ORACLE_PASSWORD: admin123   
+      
+

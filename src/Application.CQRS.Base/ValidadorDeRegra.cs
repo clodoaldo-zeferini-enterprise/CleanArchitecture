@@ -1,0 +1,35 @@
+﻿using Application.CQRS.Base;
+
+namespace Application.Base
+{
+    public class ValidadorDeRegra
+    {
+        private readonly List<string> _mensagensDeErros;
+
+        private ValidadorDeRegra()
+        {
+            _mensagensDeErros = new List<string>();
+        }
+
+        public static ValidadorDeRegra Novo()
+        {
+            return new ValidadorDeRegra();
+        }
+
+        public ValidadorDeRegra Quando(bool temErro, string mensagemDeErro)
+        {
+            if (temErro)
+                _mensagensDeErros.Add(mensagemDeErro);
+
+            return this;
+        }
+
+        public void DispararExcecaoSeExistir()
+        {
+            if (_mensagensDeErros.Any())
+            {
+                throw new ExcecaoDeModelo(_mensagensDeErros);
+            }
+        }
+    }
+}

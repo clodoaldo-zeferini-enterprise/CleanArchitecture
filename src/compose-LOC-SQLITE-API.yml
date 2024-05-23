@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:  
+  api:
+    container_name: api-loc
+    image: ${DOCKER_REGISTRY-}cleanarchapi
+    networks:
+        - cleanarch    
+    environment:
+      - ASPNETCORE_ENVIRONMENT=LOC
+      - API_DBSERVER=SQLITE 
+    build:
+      context: .
+      args: 
+        AMBIENTE: LOC
+      dockerfile: API/Dockerfile
+  
+    ports:
+      - "7000:8080" #HOST_PORT:CONTAINER_PORT
+      - "7001:8081" #HOST_PORT:CONTAINER_PORT
+
+networks:
+  net-api-loc-sqlite:
+      driver: bridge 
+

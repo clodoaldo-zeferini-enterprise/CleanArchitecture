@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mysqlhom:
+    container_name: mysqlhom
+    image: mysql:latest
+    ports:
+      - "33062:3306"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./docker/provision/mysql/init:/docker-entrypoint-initdb.d
+    environment: 
+      MYSQL_ROOT_PASSWORD: admin123
+
+  api:
+    container_name: cleanarch-API-hom
+    depends_on:
+      - mysqlhom
+    image: ${DOCKER_REGISTRY-}cleanarchapi    
+    environment:
+      - ASPNETCORE_ENVIRONMENT=HOM
+    build:
+      context: .
+      dockerfile: cleanarch-API/Dockerfile
+    ports:
+      - "7000:8080" #HOST_PORT:CONTAINER_PORT
+      - "7001:8081" #HOST_PORT:CONTAINER_PORT

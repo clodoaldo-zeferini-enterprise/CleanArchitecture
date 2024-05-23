@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.1" />
+		<PackageReference Include="MongoDB.Driver" Version="2.25.0" />
+		<PackageReference Include="Serilog" Version="3.1.1" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+	</ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\Application.CQRS.Base\Application.CQRS.Base.csproj" />
+    <ProjectReference Include="..\Application.CQRS.Command\Application.CQRS.Command.csproj" />
+    <ProjectReference Include="..\Application.CQRS.Query.NoSQL\Application.CQRS.Query.NoSQL.csproj" />
+
+    <ProjectReference Include="..\Application.CQRS.Query.SQL\Application.CQRS.Query.SQL.csproj" />
+
+
+	  <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure.Base\Infrastructure.Base.csproj" />
+    <ProjectReference Include="..\Infrastructure.DynamoDB\Infrastructure.DynamoDB.csproj" />
+    <ProjectReference Include="..\Infrastructure.MongoDB\Infrastructure.MongoDB.csproj" />
+    <ProjectReference Include="..\Infrastructure.SQLServer\Infrastructure.SQLServer.csproj" />
+    <ProjectReference Include="..\Infrastructure.Redis\Infrastructure.Redis.csproj" />
+  </ItemGroup>
+
+</Project>

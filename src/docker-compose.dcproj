@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <DockerPublishLocally>False</DockerPublishLocally>
+    <ProjectGuid>cb627c9d-e74d-469e-88c8-882604a72787</ProjectGuid>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
+    <DockerServiceName>api</DockerServiceName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="compose-DB.yml" />
+    <None Include="compose-DEV.yml" />
+    <None Include="compose-HOM.yml" />
+    <None Include="compose-PRO.yml" />
+    <None Include="compose-LOC-SQLITE-API.yml" />
+    <None Include="compose-LOC-DB.yml" />
+    <None Include=".dockerignore" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,110 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql-loc
+    environment:
+      ACCEPT_EULA: 'Y'
+      MSSQL_SA_PASSWORD: 123admin
+      MSSQL_DATA_DIR: /var/opt/mssql/data
+      MSSQL_PID: 'Developer' 
+      MSSQL_TCP_PORT: 1433 
+    ports:
+      - "14330:1433"
+    volumes:
+      - mssql_data_loc:/var/opt/mssql/data
+      - mssql_log_loc:/var/opt/mssql/log
+    networks:
+      - my_network
+
+  postgresql:
+    image: postgres:13
+    container_name: postgres-loc
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "54320:5432"
+    volumes:
+      - postgres_lib_loc:/var/lib/postgresql
+      - postgres_data_loc:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+  oracle:
+    image: oracleinanutshell/oracle-xe-11g
+    container_name: oracle-loc
+    environment:
+      ORACLE_ALLOW_REMOTE: true
+      ORACLE_PASSWORD: admin123
+      APP_USER: root
+      APP_USER_PASSWORD: admin123
+    ports:
+      - "15210:1521"
+    volumes:
+      - oracle_data_loc:/u01/app/oracle
+    networks:
+      - my_network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-loc
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123
+    ports:
+      - "33060:3306"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci 
+    volumes:
+      - mysql_data_loc:/var/lib/mysql
+    networks:
+      - my_network
+
+  mongodb:
+    image: mongo:4.4
+    container_name: mongodb-loc
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    ports:
+      - "2700:27017"
+    volumes:
+      - mongodb_data_loc:/data/db
+    networks:
+      - my_network
+
+  redis:
+    image: redis:6.2
+    container_name: redis-loc
+    ports:
+      - "63790:6379"
+    volumes:
+      - redis_data_loc:/data
+    networks:
+      - my_network
+
+  dynamodb-local:
+    image: amazon/dynamodb-local
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - dynamodb_data_loc:/home/dynamodblocal/data
+    networks:
+      - my_network
+  
+
+volumes:
+  mssql_data_loc:
+  mssql_log_loc:
+  oracle_data_loc:
+  mysql_data_loc:
+  postgres_lib_loc:
+  postgres_data_loc:
+  mongodb_data_loc:
+  redis_data_loc:
+  dynamodb_data_loc:
+
+networks:
+  my_network:
+    driver: bridge
