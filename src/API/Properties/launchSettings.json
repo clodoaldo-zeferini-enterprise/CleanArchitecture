@@ -3,29 +3,39 @@
     "Development": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "Swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:7000;https://localhost:7001"
     },
-    "http - LOC": {
+    "ONP.DEV": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "Swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "LOC"
+        "ASPNETCORE_ENVIRONMENT": "ONP.DEV"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:7000;https://localhost:7001"
     },
-    "http - DEV": {
+    "ONP.HOM": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "Swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "DEV"
+        "ASPNETCORE_ENVIRONMENT": "ONP.HOM"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:7000;https://localhost:7001"
+    },
+    "ONP.PRO": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "Swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "ONP.PRO"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:7000;https://localhost:7001"

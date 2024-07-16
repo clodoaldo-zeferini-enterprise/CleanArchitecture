@@ -10,6 +10,7 @@
     <DockerServiceName>api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="compose-redis-pwd.yml" />
     <None Include="compose-DB.yml" />
     <None Include="compose-DEV.yml" />
     <None Include="compose-HOM.yml" />

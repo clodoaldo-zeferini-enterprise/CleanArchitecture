@@ -1,43 +1,45 @@
 ﻿using Application.DTO.Request;
 using Application.DTO.Response;
-using Infrastructure.Base.Abstractions.Member;
+using Infrastructure.Base.Abstractions.Grupo;
 using MongoDB.Driver;
 
-namespace Infrastructure.MongoDB.Service.Member
+namespace Infrastructure.MongoDB.Service.Grupo
 {
-    public class MemberServiceQuery : IMemberServiceQuery
+    public class GrupoServiceQuery : IGrupoServiceQuery
     {
-        private readonly IMongoCollection<Entities.Member> _membersCollection;
-        private MemberOutResponse _memberOutResponse;
+        private readonly IMongoCollection<Entities.Grupo> _gruposCollection;
+        private GrupoOutResponse _grupoOutResponse;
         private string _userId;
-        public MemberServiceQuery(Base.Configurations.Configuration memberDatabaseSettings)
+        public GrupoServiceQuery(Base.Configurations.Configuration grupoDatabaseSettings, string userId)
         {
-            var mongoClient = new MongoClient(memberDatabaseSettings.MongoDBSettings.ConnectionString);
+            var mongoClient = new MongoClient(grupoDatabaseSettings.MongoDBSettings.ConnectionString);
 
-            var mongoDatabase = mongoClient.GetDatabase(memberDatabaseSettings.MongoDBSettings.DataBaseName);
+            var mongoDatabase = mongoClient.GetDatabase(grupoDatabaseSettings.MongoDBSettings.DataBaseName);
 
-            _membersCollection = mongoDatabase.GetCollection<Entities.Member>(memberDatabaseSettings.MongoDBSettings.CollectionName);
+            _gruposCollection = mongoDatabase.GetCollection<Entities.Grupo>(grupoDatabaseSettings.MongoDBSettings.CollectionName);
 
-            _memberOutResponse = new MemberOutResponse();
+            _grupoOutResponse = new GrupoOutResponse();
 
-            _userId = Guid.NewGuid().ToString();
+            _userId = userId;
         }
 
-        public async Task<MemberOutResponse> GetMemberById(string id)
+        /*
+        public async Task<GrupoOutResponse> GetGrupoById(string id)
         {
-            _memberOutResponse.SetData(await _membersCollection.Find(x => x.Id == id).FirstOrDefaultAsync());
-            _memberOutResponse.SetResultado(true);
-            return _memberOutResponse;
+            _grupoOutResponse.SetData(await _gruposCollection.Find(x => x.Id == id).FirstOrDefaultAsync());
+            _grupoOutResponse.SetResultado(true);
+            return _grupoOutResponse;
         }
+        */
 
-        public async Task<MemberOutResponse> GetMembers(GetFrom getFrom)
+        public async Task<GrupoOutResponse> GetGrupos(GetFrom getFrom)
         {
-            var result = _membersCollection.Find(
+            var result = _gruposCollection.Find(
 
                 x =>
             
                   getFrom.Id != null && x.Id == getFrom.Id
-               || getFrom.FiltraNome && x.Name == getFrom.FiltroNome
+               || getFrom.FiltraPorNome && x.Name == getFrom.FiltroNome
                     && getFrom.FiltraUpdatedOn && x.UpdatedOn >= getFrom.DataInicial && x.UpdatedOn <= getFrom.DataFinal
                     && getFrom.FiltraStatus && x.Status == getFrom.Status
                   
@@ -46,10 +48,10 @@ namespace Infrastructure.MongoDB.Service.Member
             .Skip(getFrom.PageSize * getFrom.PageNumber)
             .Limit(getFrom.PageSize);
 
-            _memberOutResponse.SetData(result);
+            _grupoOutResponse.SetData(result);
 
-            _memberOutResponse.SetResultado(true);
-            return _memberOutResponse;
+            _grupoOutResponse.SetResultado(true);
+            return _grupoOutResponse;
         }
     }
 }

@@ -44,6 +44,7 @@ services:
       - "15210:1521"
     volumes:
       - oracle_data_loc:/u01/app/oracle
+      #- ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     networks:
       - my_network
 
@@ -74,12 +75,20 @@ services:
       - my_network
 
   redis:
-    image: redis:6.2
+    image: redis:latest
     container_name: redis-loc
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     ports:
       - "63790:6379"
+    environment:
+      - REDIS_PASSWORD=admin123    
     volumes:
       - redis_data_loc:/data
+    command: ["redis-server", "--requirepass", "admin123"]
     networks:
       - my_network
 
@@ -97,13 +106,14 @@ services:
 volumes:
   mssql_data_loc:
   mssql_log_loc:
-  oracle_data_loc:
   mysql_data_loc:
   postgres_lib_loc:
   postgres_data_loc:
   mongodb_data_loc:
   redis_data_loc:
   dynamodb_data_loc:
+  oracle_data_loc:
+  #  driver: local
 
 networks:
   my_network:

@@ -1,0 +1,131 @@
+﻿@page "/Members/edit"
+@inject TesteContext DB
+@using Domain.Entities
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h4>Member</h4>
+<hr />
+@if (Member is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="Member" OnValidSubmit="UpdateMember" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <input type="hidden" name="Member.Id" value="@Member.Id" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <InputText id="name" @bind-Value="Member.Name" class="form-control" />
+                    <ValidationMessage For="() => Member.Name" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">FirstName:</label>
+                    <InputText id="firstname" @bind-Value="Member.FirstName" class="form-control" />
+                    <ValidationMessage For="() => Member.FirstName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">LastName:</label>
+                    <InputText id="lastname" @bind-Value="Member.LastName" class="form-control" />
+                    <ValidationMessage For="() => Member.LastName" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Gender:</label>
+                    <InputText id="gender" @bind-Value="Member.Gender" class="form-control" />
+                    <ValidationMessage For="() => Member.Gender" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <InputText id="email" @bind-Value="Member.Email" class="form-control" />
+                    <ValidationMessage For="() => Member.Email" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status:</label>
+                    <InputText id="status" @bind-Value="Member.Status" class="form-control" />
+                    <ValidationMessage For="() => Member.Status" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="insertedon" class="form-label">InsertedOn:</label>
+                    <InputDate id="insertedon" @bind-Value="Member.InsertedOn" class="form-control" />
+                    <ValidationMessage For="() => Member.InsertedOn" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="insertedby" class="form-label">InsertedBy:</label>
+                    <InputText id="insertedby" @bind-Value="Member.InsertedBy" class="form-control" />
+                    <ValidationMessage For="() => Member.InsertedBy" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="updatedon" class="form-label">UpdatedOn:</label>
+                    <InputDate id="updatedon" @bind-Value="Member.UpdatedOn" class="form-control" />
+                    <ValidationMessage For="() => Member.UpdatedOn" class="text-danger" />
+                </div>
+                <div class="mb-3">
+                    <label for="updatedby" class="form-label">UpdatedBy:</label>
+                    <InputText id="updatedby" @bind-Value="Member.UpdatedBy" class="form-control" />
+                    <ValidationMessage For="() => Member.UpdatedBy" class="text-danger" />
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/members">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string Id { get; set; }
+
+    [SupplyParameterFromForm]
+    public Member? Member { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Member ??= await DB.Members.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (Member is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task UpdateMember()
+    {
+        DB.Attach(Member!).State = EntityState.Modified;
+
+        try
+        {
+            await DB.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!MemberExists(Member!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/members");
+    }
+
+    bool MemberExists(string id)
+    {
+        return DB.Members.Any(e => e.Id == id);
+    }
+}

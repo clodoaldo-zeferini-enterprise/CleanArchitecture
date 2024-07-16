@@ -9,7 +9,7 @@ public static class DIDAPPER
                   this IServiceCollection services,
                   IConfiguration configuration)
     {            
-        services.AddScoped<Infrastructure.SQLServer.Repositories.Member.IMemberDapperRepository, Infrastructure.SQLServer.Repositories.Member.MemberDapperRepository>();
+        services.AddScoped<Infrastructure.SQLServer.Repositories.Grupo.IGrupoDapperRepository, Infrastructure.SQLServer.Repositories.Grupo.GrupoDapperRepository>();
         
         return services;
     }

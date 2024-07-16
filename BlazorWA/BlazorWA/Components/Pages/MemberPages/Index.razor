@@ -1,0 +1,31 @@
+﻿@page "/members"
+@using Microsoft.AspNetCore.Components.QuickGrid
+@inject TesteContext DB
+@using Domain.Entities
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="members/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="DB.Members">
+    <PropertyColumn Property="member => member.Name" />
+    <PropertyColumn Property="member => member.FirstName" />
+    <PropertyColumn Property="member => member.LastName" />
+    <PropertyColumn Property="member => member.Gender" />
+    <PropertyColumn Property="member => member.Email" />
+    <PropertyColumn Property="member => member.Status" />
+    <PropertyColumn Property="member => member.InsertedOn" />
+    <PropertyColumn Property="member => member.InsertedBy" />
+    <PropertyColumn Property="member => member.UpdatedOn" />
+    <PropertyColumn Property="member => member.UpdatedBy" />
+
+    <TemplateColumn Context="member">
+        <a href="@($"members/edit?id={member.Id}")">Edit</a> |
+        <a href="@($"members/details?id={member.Id}")">Details</a> |
+        <a href="@($"members/delete?id={member.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>

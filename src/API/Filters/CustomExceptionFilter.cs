@@ -21,15 +21,13 @@ public class CustomExceptionFilter : IExceptionFilter
             context.Result = result;
             context.ExceptionHandled = true;
         }
-        else if (context.Exception is ArgumentNullException ||
-                   context.Exception is KeyNotFoundException)
+        else if (context.Exception is ArgumentNullException || context.Exception is KeyNotFoundException)
         {
             // Tratar erro 404 (Não Encontrado)
             context.Result = new NotFoundObjectResult(new { Error = "Recurso não encontrado." });
             context.ExceptionHandled = true;
         }
-        else if (context.Exception is HttpRequestException ||
-                 context.Exception is InvalidOperationException)
+        else if (context.Exception is HttpRequestException || context.Exception is InvalidOperationException)
         {
             // Tratar erro 500 (Erro Interno do Servidor)
             context.Result = new StatusCodeResult(StatusCodes.Status500InternalServerError);

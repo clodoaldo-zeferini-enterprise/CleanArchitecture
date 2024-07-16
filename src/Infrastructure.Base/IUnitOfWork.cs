@@ -3,6 +3,6 @@ namespace Infrastructure.Base;
 
 public interface IUnitOfWork : IDisposable
 {
-    IMemberRepositoryCommand MemberRepositoryCommand { get; }
+    IGrupoRepositoryCommand GrupoRepositoryCommand { get; }
     Task<int> Save();
 }

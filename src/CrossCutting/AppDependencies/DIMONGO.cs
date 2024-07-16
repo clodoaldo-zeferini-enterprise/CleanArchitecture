@@ -1,6 +1,6 @@
 ﻿
-using Infrastructure.Base.Abstractions.Member;
-using Infrastructure.MongoDB.Service.Member;
+using Infrastructure.Base.Abstractions.Grupo;
+using Infrastructure.MongoDB.Service.Grupo;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -11,7 +11,8 @@ public static class DIMONGO
     public static IServiceCollection AddInfrastructureMONGO(
                   this IServiceCollection services)
     {
-        services.AddScoped<IMemberServiceCommand, MemberServiceCommand>();
+        services.AddScoped<IGrupoServiceCommand, GrupoServiceCommand>();
+        services.AddScoped<IGrupoServiceQuery, GrupoServiceQuery>();
 
         return services;
     }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
-using Application.CQRS.Command.Members.Validations;
+using Application.CQRS.Command.Grupo.Validations;
 
 namespace CrossCutting.AppDependencies;
 

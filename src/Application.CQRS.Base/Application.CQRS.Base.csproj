@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Application.DTO\Application.DTO.csproj" />
     <ProjectReference Include="..\Infrastructure.Base\Infrastructure.Base.csproj" />
   </ItemGroup>
 

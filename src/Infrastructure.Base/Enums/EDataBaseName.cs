@@ -11,5 +11,6 @@
         Redis   = 6,
         DynamoDB = 7,
         CosmosDB = 8,
+        CassandraDB = 9,
     }
 }

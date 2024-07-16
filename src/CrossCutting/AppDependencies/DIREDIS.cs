@@ -1,17 +1,9 @@
 ﻿
-using Infrastructure.Base.Abstractions.Member;
+using Infrastructure.Base.Abstractions.Grupo;
 using Infrastructure.Base.Configurations;
-using Infrastructure.SQLServer.Context;
-using Infrastructure.SQLServer.Service.Member;
-using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Redis.Service.Grupo;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Redis.OM.Contracts;
-using Redis.OM.Searching;
-using Redis.OM;
 using StackExchange.Redis;
-using System.Data;
 
 
 namespace CrossCutting.AppDependencies;
@@ -19,21 +11,28 @@ namespace CrossCutting.AppDependencies;
 public static class DIREDIS
 {
     public static IServiceCollection AddInfrastructureREDIS(
-                  this IServiceCollection services)
+                  this IServiceCollection services, RedisStackSettings redisSettings)
     {
-        services.AddSingleton<IRedisConnectionProvider>(sp =>
-        {
-            var settings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
-            return new RedisConnectionProvider(settings.ConnectionString);
-        });
-        
-        services.AddSingleton<IRedisCollection<Infrastructure.Redis.Entities.Member>>(sp =>
-        {
-            var provider = sp.GetRequiredService<IRedisConnectionProvider>();
-            return provider.RedisCollection<Infrastructure.Redis.Entities.Member>();
-        });
+        //var configuration = $@"{redisSettings.EndPoint},password={redisSettings.Password}";
 
-        services.AddScoped<IMemberServiceCommand, MemberServiceCommand>();
+        var configuration = $@"{redisSettings.EndPoint}";
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration  = configuration;
+            options.InstanceName = "InstanceName";
+
+            options.ConfigurationOptions = new ConfigurationOptions
+            {                
+                DefaultDatabase = 0,
+                IncludeDetailInExceptions = true,
+                AbortOnConnectFail = true,
+                EndPoints = { redisSettings.EndPoint }
+            };
+        });
+            
+        services.AddScoped<IGrupoServiceCommand, GrupoServiceCommand>();
+        services.AddScoped<IGrupoServiceQuery, GrupoServiceQuery>();
 
         return services;
     }

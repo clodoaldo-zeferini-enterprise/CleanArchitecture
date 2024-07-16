@@ -1,6 +1,5 @@
-﻿
-using Infrastructure.Base.Abstractions.Member;
-using Infrastructure.DynamoDB.Service.Member;
+﻿using Infrastructure.Base.Abstractions.Grupo;
+using Infrastructure.DynamoDB.Service.Grupo;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -11,7 +10,8 @@ public static class DIDynamoDB
     public static IServiceCollection AddInfrastructureDIDynamoDB(
                   this IServiceCollection services)
     {
-        services.AddScoped<IMemberServiceCommand, MemberServiceCommand>();
+        services.AddScoped<IGrupoServiceCommand, GrupoServiceCommand>();
+        services.AddScoped<IGrupoServiceQuery, GrupoServiceQuery>();
 
         return services;
     }

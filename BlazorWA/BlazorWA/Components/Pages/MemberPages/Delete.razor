@@ -1,0 +1,89 @@
+﻿@page "/members/delete"
+@inject TesteContext DB
+@using Domain.Entities
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Delete</PageTitle>
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Member</h4>
+    <hr />
+    @if (member is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@member.Name</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">FirstName</dt>
+            <dd class="col-sm-10">@member.FirstName</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">LastName</dt>
+            <dd class="col-sm-10">@member.LastName</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Gender</dt>
+            <dd class="col-sm-10">@member.Gender</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@member.Email</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Status</dt>
+            <dd class="col-sm-10">@member.Status</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">InsertedOn</dt>
+            <dd class="col-sm-10">@member.InsertedOn</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">InsertedBy</dt>
+            <dd class="col-sm-10">@member.InsertedBy</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">UpdatedOn</dt>
+            <dd class="col-sm-10">@member.UpdatedOn</dd>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">UpdatedBy</dt>
+            <dd class="col-sm-10">@member.UpdatedBy</dd>
+        </dl>
+        <EditForm method="post" Model="member" OnValidSubmit="DeleteMember" FormName="delete" Enhance>
+            <button type="submit" class="btn btn-danger" disabled="@(member is null)">Delete</button> |
+            <a href="/members">Back to List</a>
+        </EditForm>
+    }
+</div>
+
+@code {
+    Member? member;
+
+    [SupplyParameterFromQuery]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        member = await DB.Members.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (member is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    public async Task DeleteMember()
+    {
+        DB.Members.Remove(member!);
+        await DB.SaveChangesAsync();
+        NavigationManager.NavigateTo("/members");
+    }
+}

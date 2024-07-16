@@ -1,0 +1,88 @@
+﻿@page "/members/create"
+@inject TesteContext DB
+@using Domain.Entities
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h4>Member</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="Member" OnValidSubmit="AddMember" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label> 
+                <InputText id="name" @bind-Value="Member.Name" class="form-control" /> 
+                <ValidationMessage For="() => Member.Name" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="firstname" class="form-label">FirstName:</label> 
+                <InputText id="firstname" @bind-Value="Member.FirstName" class="form-control" /> 
+                <ValidationMessage For="() => Member.FirstName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="lastname" class="form-label">LastName:</label> 
+                <InputText id="lastname" @bind-Value="Member.LastName" class="form-control" /> 
+                <ValidationMessage For="() => Member.LastName" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="gender" class="form-label">Gender:</label> 
+                <InputText id="gender" @bind-Value="Member.Gender" class="form-control" /> 
+                <ValidationMessage For="() => Member.Gender" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label> 
+                <InputText id="email" @bind-Value="Member.Email" class="form-control" /> 
+                <ValidationMessage For="() => Member.Email" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="status" class="form-label">Status:</label> 
+                <InputText id="status" @bind-Value="Member.Status" class="form-control" /> 
+                <ValidationMessage For="() => Member.Status" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="insertedon" class="form-label">InsertedOn:</label> 
+                <InputDate id="insertedon" @bind-Value="Member.InsertedOn" class="form-control" /> 
+                <ValidationMessage For="() => Member.InsertedOn" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="insertedby" class="form-label">InsertedBy:</label> 
+                <InputText id="insertedby" @bind-Value="Member.InsertedBy" class="form-control" /> 
+                <ValidationMessage For="() => Member.InsertedBy" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="updatedon" class="form-label">UpdatedOn:</label> 
+                <InputDate id="updatedon" @bind-Value="Member.UpdatedOn" class="form-control" /> 
+                <ValidationMessage For="() => Member.UpdatedOn" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="updatedby" class="form-label">UpdatedBy:</label> 
+                <InputText id="updatedby" @bind-Value="Member.UpdatedBy" class="form-control" /> 
+                <ValidationMessage For="() => Member.UpdatedBy" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/members">Back to List</a>
+</div>
+
+@code {
+
+    [SupplyParameterFromForm]
+    public Member Member { get; set; } = new();
+
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task AddMember()
+    {
+        DB.Members.Add(Member);
+        await DB.SaveChangesAsync();
+        NavigationManager.NavigateTo("/members");
+    }
+}

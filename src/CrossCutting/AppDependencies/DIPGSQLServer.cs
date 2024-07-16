@@ -1,6 +1,6 @@
-﻿using Infrastructure.Base.Abstractions.Member;
+﻿using Infrastructure.Base.Abstractions.Grupo;
 using Infrastructure.SQLServer.Context;
-using Infrastructure.SQLServer.Service.Member;
+using Infrastructure.SQLServer.Service.Grupo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
@@ -14,8 +14,9 @@ public static class DIPGSQLServer
     public static IServiceCollection AddInfrastructurePGSQL(
                   this IServiceCollection services, string sqlConnection)
     {
-        services.AddDbContext<AppDbContext>(options =>
-                         options.UseNpgsql(sqlConnection));
+        services.AddDbContext<AppDbContext>(  options =>
+                         options.UseNpgsql(sqlConnection)
+                         );
 
         // Registrar IDbConnection como uma instância única
         services.AddSingleton<IDbConnection>(provider =>
@@ -26,7 +27,9 @@ public static class DIPGSQLServer
         });
 
         services.AddScoped<Infrastructure.Base.IUnitOfWork, Infrastructure.SQLServer.Repositories.UnitOfWork>();
-        services.AddScoped<IMemberServiceCommand, MemberServiceCommand>();
+        
+        services.AddScoped<IGrupoServiceCommand, GrupoServiceCommand>();
+        services.AddScoped<IGrupoServiceQuery, GrupoServiceQuery>();
 
         return services;
     }

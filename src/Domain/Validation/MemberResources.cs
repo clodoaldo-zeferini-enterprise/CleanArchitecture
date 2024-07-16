@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Validation
 {
-    public static class MemberResources
+    public static class GrupoResources
     {
         public static readonly string IdIsRequired = "Please ensure you have entered the Id";
         public static readonly int IdMinLength = 36;

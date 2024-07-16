@@ -1,7 +1,7 @@
 ﻿
-using Infrastructure.Base.Abstractions.Member;
+using Infrastructure.Base.Abstractions.Grupo;
 using Infrastructure.SQLServer.Context;
-using Infrastructure.SQLServer.Service.Member;
+using Infrastructure.SQLServer.Service.Grupo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data;
@@ -16,8 +16,6 @@ public static class DIMSSQLServer
         services.AddDbContext<AppDbContext>(options =>
                  options.UseSqlServer(sqlConnection));
 
-        services.AddScoped<IMemberServiceCommand, MemberServiceCommand>();
-
         services.AddSingleton<IDbConnection>(provider =>
         {
             var connection = new System.Data.SqlClient.SqlConnection(sqlConnection);
@@ -26,7 +24,9 @@ public static class DIMSSQLServer
         });
 
         services.AddScoped<Infrastructure.Base.IUnitOfWork, Infrastructure.SQLServer.Repositories.UnitOfWork>();
-        services.AddScoped<IMemberServiceCommand, MemberServiceCommand>();
+        
+        services.AddScoped<IGrupoServiceCommand, GrupoServiceCommand>();
+        services.AddScoped<IGrupoServiceQuery, GrupoServiceQuery>();
 
 
         return services;

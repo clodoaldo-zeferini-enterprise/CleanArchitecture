@@ -4,7 +4,6 @@ using static Dapper.SqlMapper;
 
 namespace Infrastructure.SQLServer.Repositories.Base.Dapper
 {
-
     public abstract class DapperRepository<TEntity> : IRepositorySQL<TEntity> where TEntity : class
     {
         private readonly IDbConnection _dbConnection;

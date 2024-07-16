@@ -7,6 +7,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\Application.DTO\Application.DTO.csproj" />
 		<ProjectReference Include="..\Application.CQRS.Base\Application.CQRS.Base.csproj" />
 		<ProjectReference Include="..\Domain\Domain.csproj" />
 		<ProjectReference Include="..\Infrastructure.SQLServer\Infrastructure.SQLServer.csproj" />

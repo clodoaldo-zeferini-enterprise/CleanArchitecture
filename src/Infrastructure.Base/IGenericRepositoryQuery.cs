@@ -1,4 +1,4 @@
-﻿using Domain.Request;
+﻿using Application.DTO.Request;
 
 namespace Infrastructure.Base
 {

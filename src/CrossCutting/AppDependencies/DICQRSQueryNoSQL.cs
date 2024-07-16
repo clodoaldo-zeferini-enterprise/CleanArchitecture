@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using static System.Net.Mime.MediaTypeNames;
-using Application.CQRS.Command.Members.Validations;
+using Application.CQRS.Command.Grupo.Validations;
 
 namespace CrossCutting.AppDependencies;
 
@@ -13,10 +13,10 @@ public static class DICQRSQueryNoSQL
                   this IServiceCollection services,
                   IConfiguration configuration)
     {    
-        var myhandlersQuerySQL = AppDomain.CurrentDomain.Load("Application.CQRS.Query.NoSQL");
+        var myhandlersQueryNoSQL = AppDomain.CurrentDomain.Load("Application.CQRS.Query.NoSQL");
         services.AddMediatR(cfg =>
         {
-            cfg.RegisterServicesFromAssemblies(myhandlersQuerySQL);
+            cfg.RegisterServicesFromAssemblies(myhandlersQueryNoSQL);
             cfg.AddOpenBehavior(typeof(ValidationBehaviour<,>));
         });
 

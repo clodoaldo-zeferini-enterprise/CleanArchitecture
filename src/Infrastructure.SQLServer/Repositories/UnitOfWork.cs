@@ -1,12 +1,12 @@
 ﻿using Infrastructure.Base;
 using Infrastructure.SQLServer.Context;
-using Infrastructure.SQLServer.Repositories.Member;
+using Infrastructure.SQLServer.Repositories.Grupo;
 
 namespace Infrastructure.SQLServer.Repositories
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private IMemberRepositoryCommand? _memberRepositoryCommand;
+        private IGrupoRepositoryCommand? _grupoRepositoryCommand;
         public AppDbContext _appDbContext;
 
         public UnitOfWork(AppDbContext appDbContext)
@@ -14,7 +14,7 @@ namespace Infrastructure.SQLServer.Repositories
             _appDbContext = appDbContext;
         }
 
-        public IMemberRepositoryCommand MemberRepositoryCommand { get { return _memberRepositoryCommand ?? new MemberRepositoryCommand(_appDbContext); } }
+        public IGrupoRepositoryCommand GrupoRepositoryCommand { get { return _grupoRepositoryCommand ?? new GrupoRepositoryCommand(_appDbContext); } }
 
         public Task<int> Save()
         {

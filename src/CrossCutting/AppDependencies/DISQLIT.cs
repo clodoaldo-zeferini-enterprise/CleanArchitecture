@@ -1,7 +1,7 @@
 ﻿
-using Infrastructure.Base.Abstractions.Member;
+using Infrastructure.Base.Abstractions.Grupo;
 using Infrastructure.SQLServer.Context;
-using Infrastructure.SQLServer.Service.Member;
+using Infrastructure.SQLServer.Service.Grupo;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +27,9 @@ public static class DISQLIT
         });
 
         services.AddScoped<Infrastructure.Base.IUnitOfWork, Infrastructure.SQLServer.Repositories.UnitOfWork>();
-        services.AddScoped<IMemberServiceCommand, MemberServiceCommand>();
+        
+        services.AddScoped<IGrupoServiceCommand, GrupoServiceCommand>();
+        services.AddScoped<IGrupoServiceQuery, GrupoServiceQuery>();
 
         return services;
     }

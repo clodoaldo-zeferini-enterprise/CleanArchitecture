@@ -1,0 +1,63 @@
+﻿@page "/members/details"
+@inject TesteContext DB
+@using Domain.Entities
+@inject NavigationManager NavigationManager
+@using Microsoft.EntityFrameworkCore
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h4>Member</h4>
+    <hr />
+    @if (member is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+            <dt class="col-sm-2">Name</dt>
+            <dd class="col-sm-10">@member.Name</dd>
+            <dt class="col-sm-2">FirstName</dt>
+            <dd class="col-sm-10">@member.FirstName</dd>
+            <dt class="col-sm-2">LastName</dt>
+            <dd class="col-sm-10">@member.LastName</dd>
+            <dt class="col-sm-2">Gender</dt>
+            <dd class="col-sm-10">@member.Gender</dd>
+            <dt class="col-sm-2">Email</dt>
+            <dd class="col-sm-10">@member.Email</dd>
+            <dt class="col-sm-2">Status</dt>
+            <dd class="col-sm-10">@member.Status</dd>
+            <dt class="col-sm-2">InsertedOn</dt>
+            <dd class="col-sm-10">@member.InsertedOn</dd>
+            <dt class="col-sm-2">InsertedBy</dt>
+            <dd class="col-sm-10">@member.InsertedBy</dd>
+            <dt class="col-sm-2">UpdatedOn</dt>
+            <dd class="col-sm-10">@member.UpdatedOn</dd>
+            <dt class="col-sm-2">UpdatedBy</dt>
+            <dd class="col-sm-10">@member.UpdatedBy</dd>
+        </dl>
+        <div>
+            <a href="@($"/members/edit?id={member.Id}")">Edit</a> |
+            <a href="@($"/members")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    Member? member;
+
+    [SupplyParameterFromQuery]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        member = await DB.Members.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (member is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}
