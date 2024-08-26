@@ -6,6 +6,7 @@ using Application.DTO.Response.Grupo;
 using Infrastructure.Base.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NetCore.Base.Enum;
 
 namespace API.Controllers;
 
@@ -78,8 +79,9 @@ public class GrupoController : ControllerBase
     }    
 
     [HttpPost]
-    public async Task<IActionResult> CreateGrupo(CreateGrupoCommand command)
-    {        
+    public async Task<IActionResult> CreateGrupo(Application.DTO.Request.Grupo.CreateGrupoRequest request)
+    {
+        var command = new CreateGrupoCommand(request.NomeDoGrupo, request.RazaoSocial, request.NomeFantasia, request.Cnpj, request.InscricaoEstadual, request.CpfDoAdministrador, request.PreNomeDoAdministrador, request.NomeDoMeioDoAdministrador, request.SobreNomeDoAdministrador, request.EmailDoAdministrador, request.InsertedBy);
         var createdGrupo = await _mediator.Send(command);
         
         GrupoResponse grupoResponse = (GrupoResponse)createdGrupo.Data;
@@ -88,19 +90,20 @@ public class GrupoController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateGrupo(string id, UpdateGrupoCommand command)
+    public async Task<IActionResult> UpdateGrupo(string id, Application.DTO.Request.Grupo.UpdateGrupoRequest request)
     {
         Guid.TryParse(id, out Guid isIdValido);
-        var updatedGrupo = await _mediator.Send(command);
 
+        var command = new UpdateGrupoCommand(id, request.UpdatedBy, request.Status);
+        var updatedGrupo = await _mediator.Send(command);
         return updatedGrupo != null ? Ok(updatedGrupo) : NotFound("Grupo not found.");
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteGrupo(DeleteGrupoCommand command)
-    {        
+    public async Task<IActionResult> DeleteGrupo(Application.DTO.Request.Grupo.DeleteGrupoRequest request)
+    {
+        var command = new DeleteGrupoCommand(request.Id, request.DeletedBy);
         var deletedGrupo = await _mediator.Send(command);
-
         return deletedGrupo != null ? Ok(deletedGrupo) : NotFound("Grupo not found.");
     }
 }

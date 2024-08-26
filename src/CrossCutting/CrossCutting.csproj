@@ -18,20 +18,45 @@
 	</ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\..\Application.DTO\Application.DTO.csproj" />
-    <ProjectReference Include="..\Application.CQRS.Base\Application.CQRS.Base.csproj" />
-    <ProjectReference Include="..\Application.CQRS.Command\Application.CQRS.Command.csproj" />
-    <ProjectReference Include="..\Application.CQRS.Query.NoSQL\Application.CQRS.Query.NoSQL.csproj" />
 
-    <ProjectReference Include="..\Application.CQRS.Query.SQL\Application.CQRS.Query.SQL.csproj" />
+
+	  <ProjectReference Include="..\Application\Application.CQRS.Base\Application.CQRS.Base.csproj" />
+
+
+	  <ProjectReference Include="..\Application\Application.CQRS.Command\Application.CQRS.Command.csproj" />
+
+
+	  <ProjectReference Include="..\Application\Application.CQRS.Query.NoSQL\Application.CQRS.Query.NoSQL.csproj" />
+
+
+	  <ProjectReference Include="..\Application\Application.CQRS.Query.SQL\Application.CQRS.Query.SQL.csproj" />
+
+
+	  <ProjectReference Include="..\Application\Application.DTO\Application.DTO.csproj" />
 
 
 	  <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Infrastructure.Base\Infrastructure.Base.csproj" />
-    <ProjectReference Include="..\Infrastructure.DynamoDB\Infrastructure.DynamoDB.csproj" />
-    <ProjectReference Include="..\Infrastructure.MongoDB\Infrastructure.MongoDB.csproj" />
-    <ProjectReference Include="..\Infrastructure.SQLServer\Infrastructure.SQLServer.csproj" />
-    <ProjectReference Include="..\Infrastructure.Redis\Infrastructure.Redis.csproj" />
+
+
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.Base\Infrastructure.Base.csproj" />
+
+
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.Cassandra\Infrastructure.Cassandra.csproj" />
+
+
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.DynamoDB\Infrastructure.DynamoDB.csproj" />
+
+
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.MongoDB.Console\Infrastructure.MongoDB.Console.csproj" />
+
+
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.MongoDB\Infrastructure.MongoDB.csproj" />
+
+
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.Redis\Infrastructure.Redis.csproj" />
+
+
+	  <ProjectReference Include="..\Infrastructure\Infrastructure.SQLServer\Infrastructure.SQLServer.csproj" />
   </ItemGroup>
 
 </Project>

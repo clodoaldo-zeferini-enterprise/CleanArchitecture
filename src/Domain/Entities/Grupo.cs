@@ -6,11 +6,11 @@ using System.Xml.Linq;
 
 namespace Domain.Entities
 {
-     public sealed class Grupo : Root
+    public class Grupo : Root
     {
         public string Id { get; private set; }
         public ICollection<Empresa>? Empresas { get; private set; }
-
+        
         /// <summary>
         /// Create
         /// </summary>
@@ -32,7 +32,7 @@ namespace Domain.Entities
         {
             Id = Guid.NewGuid().ToString();
 
-            ValidateGrupoInsert();
+            //ValidateGrupoInsert();
 
             var empresaBuilder = new EmpresaBuilder()                
                 .ComGrupoId(Id)
@@ -52,6 +52,7 @@ namespace Domain.Entities
             AddEmpresa(empresa);
         }
 
+       
         /// <summary>
         /// Get
         /// </summary>
@@ -63,7 +64,11 @@ namespace Domain.Entities
         /// <param name="updatedOn"></param>
         /// <param name="updatedBy"></param>
         /// <param name="empresas"></param>
-        public Grupo(string id, string nomeDoGrupo, EStatus status, DateTime insertedOn, string insertedBy, DateTime updatedOn, string updatedBy, ICollection<Empresa> empresas) 
+        public Grupo(string id,string nomeDoGrupo, string razaoSocial, string nomeFantasia
+                     , string cnpj, string inscricaoEstadual
+                     , string cpfDoAdministrador, string preNomeDoAdministrador, string nomeDoMeioDoAdministrador, 
+            string sobreNomeDoAdministrador, string emailDoAdministrador, EStatus status
+                     , DateTime insertedOn, string insertedBy, DateTime updatedOn, string updatedBy, ICollection<Empresa> empresas) 
             : base(nomeDoGrupo, status, insertedOn, updatedOn, insertedBy, updatedBy)
         {
             Id = id;
@@ -77,22 +82,7 @@ namespace Domain.Entities
         public void Delete(string updatedBy)
         {
             base.SetStatus(EStatus.EXCLUIDO, updatedBy);
-        }
-
-        private void ValidateGrupoInsert()
-        {
-            ValidadorDeRegra
-                .Novo()
-                .DispararExcecaoSeExistir();
-        }
-
-        private void ValidateGrupoUpdate()
-        {
-            ValidadorDeRegra
-                .Novo()
-                .Quando(!ValidateGuid(UpdatedBy), "UpdatedBy is required")
-                .DispararExcecaoSeExistir();
-        }
+        }        
 
         public void AddEmpresa(Empresa empresa)
         {
@@ -101,7 +91,7 @@ namespace Domain.Entities
         }
     }
 
-     public sealed class Empresa : NetCore.Base.PessoaJuridica
+     public class Empresa : NetCore.Base.PessoaJuridica
     {
         public string Id { get; private set; }
         public string GrupoId { get; private set; }
@@ -120,7 +110,7 @@ namespace Domain.Entities
 
 
         /// <summary>
-        /// Insert
+        /// Create
         /// </summary>
         /// <param name="grupoId"></param>
         /// <param name="cnpj"></param>
@@ -235,7 +225,7 @@ namespace Domain.Entities
         }
     }
 
-     public sealed class Filial : NetCore.Base.PessoaJuridica
+     public class Filial : NetCore.Base.PessoaJuridica
     {
         public string EmpresaId { get; private set; }
         public string Id { get; private set; }
@@ -246,6 +236,7 @@ namespace Domain.Entities
         public string NomeDaFilial { get; private set; }
         public ICollection<Departamento> Departamentos { get; private set; }
 
+        
         /// <summary>
         /// Create
         /// </summary>
@@ -290,6 +281,7 @@ namespace Domain.Entities
 
             ValidateFilialUpdate();
         }
+        
 
         /// <summary>
         /// Get
@@ -345,7 +337,7 @@ namespace Domain.Entities
         }
     }
 
-     public sealed class Departamento : Root
+     public class Departamento : Root
     {
         public string FilialId { get; private set; }
         public string Id { get; private set; }
@@ -432,7 +424,7 @@ namespace Domain.Entities
         }
     }
 
-     public sealed class Pessoa : PessoaFisica
+     public class Pessoa : PessoaFisica
     {
         public string DepartamentoId { get; private set; }
 
@@ -516,7 +508,7 @@ namespace Domain.Entities
         }
     }
 
-     public sealed class Usuario : Root
+     public class Usuario : Root
     {
         public string PessoaId { get; private set; }
         public string Id { get; private set; }

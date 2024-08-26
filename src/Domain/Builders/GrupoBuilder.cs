@@ -151,7 +151,10 @@ namespace Domain.Builders
 
         public Grupo BuildForGet()
         {
-            var grupo = new Grupo(_id, _nomeDoGrupo, _status, _insertedOn, _insertedBy, _updatedOn, _updatedBy, _empresas);
+            var grupo = new Grupo(_id, _nomeDoGrupo, _razaoSocial, _nomeFantasia
+                , _cnpj, _inscricaoEstadual, _cpfDoAdministrador, _preNomeDoAdministrador,
+                _nomeDoMeioDoAdministrador, _sobreNomeDoAdministrador, _emailDoAdministrador,
+                _status, _insertedOn, _insertedBy, _updatedOn, _updatedBy, _empresas);
 
             return grupo;
         }

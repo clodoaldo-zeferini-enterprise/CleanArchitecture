@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-//using Service.Member.Model.Response.Errors;
+//using Service.Grupo.Model.Response.Errors;
 using System.Text;
 
 namespace API.Controllers
